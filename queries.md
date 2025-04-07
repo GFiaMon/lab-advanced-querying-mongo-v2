@@ -22,8 +22,13 @@ Limit: 20
 
 **3. All the companies founded between 2000 and 2005, both years included. Retrieve only the `name` and `founded_year` fields.**
 
-<!-- Your Query Goes Here --> {founded_year: {$gte: 2000, $lte: 2005}
+<!-- Your Query Goes Here --> 
+{ "$and": [
+    { "founded_year": { "$gte": 2000 } }, 
+    { "founded_year": { "$lte": 2005 } }
+] 
 }
+
 Projection: {name: 1, _id: 0, founded_year: 1}
 
 <br>
@@ -94,7 +99,7 @@ Sort:   { "acquisition.price_amount": -1 }
 
 <!-- Your Query Goes Here -->   		{'founded_year': { '$ne': null }}
 Project: { name: 1, founded_year: 1, _id: 0 }
-Sort: {founded_year: -1}
+Sort: { "founded_year": -1 }
 
 <br>
 
@@ -108,8 +113,6 @@ Sort: {founded_year: -1}
 }
 Sort: {number_of_employees: 1}
 
-{category_code: 'web'}
-{number_of_employees: {$gte: 4000}}
 <br>
 
 **4. All the companies whose acquisition amount is more than 10.000.000, and currency is 'EUR'.**
