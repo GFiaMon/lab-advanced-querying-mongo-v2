@@ -13,9 +13,14 @@
 **2. All the companies that have more than 5000 employees. Limit the search to 20 companies and sort them by *number of employees*.**
 
 <!-- Your Query Goes Here --> 
-{number_of_employees: {$gt: 5000}}
+// Query
+{ "number_of_employees": { "$gt": 5000 } }
 
-Limit: 20
+// Sort
+{ "number_of_employees": 1 } // Ascending order; use -1 for descending
+
+// Limit
+20
 
 
 <br>
@@ -59,7 +64,12 @@ Projection: {name: 1, ipo:1, _id: 0}
 
 **7. Order all the companies by their IPO price in a descending order.**
 
-<!-- Your Query Goes Here --> Sort: {"ipo.valuation_amount":-1}
+<!-- Your Query Goes Here --> 
+// Query
+{ "ipo": { "$exists": true } }
+
+// Sort
+{ "ipo.valuation_amount": -1 } // Sorting by IPO price in descending order
 
 <br>
 
@@ -73,8 +83,12 @@ Limit: 10
 
 **9. All the companies founded on the second semester of the year (July to December). Limit your search to 1000 companies.**
 
-<!-- Your Query Goes Here -->   {founded_month: {$gte:7}}
-Limit: 10000
+<!-- Your Query Goes Here -->
+// Query
+{ "founded_month": { "$gte": 7 } }
+
+// Limit
+1000
 
 <br>
 
@@ -130,9 +144,13 @@ Sort: {number_of_employees: 1}
 
 <!-- Your Query Goes Here -->
 
-{$and: [
-    {founded_year: {$gte: 2000, $lte: 2010}},
-    {"acquisition.acquired_year": {$lt: 2011}}
-]
+// Query
+{
+  "founded_year": { "$gte": 2000, "$lte": 2010 },
+  "$or": [
+    { "acquisition.acquired_year": { "$exists": false } },
+    { "acquisition.acquired_year": { "$gte": 2011 } }
+  ]
 }
+
 <br>
